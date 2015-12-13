@@ -1,0 +1,11 @@
+Package: halle
+Title: Halle R. Zucker R functions
+Version: 0.1.0
+Authors@R: Halle R. Zucker <hrzucker@ucdavis.edu>
+Description: Common R functions that Halle uses.
+Depends: 
+    R (>= 3.2.1)
+License: MIT + file LICENSE
+LazyData: true
+RoxygenNote: 5.0.1
+Suggests: testthat
