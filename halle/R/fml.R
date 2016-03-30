@@ -6,6 +6,8 @@
 #'
 #' Clears the environment (like rm(list=ls()))
 #' Clears the screen (like ctrl+L)
+#'
+#' @export
 
 fml <- function() {
   ENV <- globalenv()

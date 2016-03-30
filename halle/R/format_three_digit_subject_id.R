@@ -2,6 +2,8 @@
 #'
 #' @param sub Subject number
 #' @return formatted subject number
+#'
+#' @export
 
 format_subject_id <- function(sub) {
   if(sub < 10) {
