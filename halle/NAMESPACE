@@ -2,5 +2,6 @@
 
 export(ensure_trailing_slash)
 export(fml)
-export(format_subject_id)
+export(format_three_digit_subject_id)
+export(prepend_s_to_subject_id)
 export(replace_NA_with_zeros)

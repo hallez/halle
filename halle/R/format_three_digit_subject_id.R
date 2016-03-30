@@ -5,7 +5,7 @@
 #'
 #' @export
 
-format_subject_id <- function(sub) {
+format_three_digit_subject_id <- function(sub) {
   if(sub < 10) {
     return(paste0('s00', sub))
   } else if(sub < 100) {

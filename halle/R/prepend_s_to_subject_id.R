@@ -5,6 +5,6 @@
 #'
 #' @export
 
-format_subject_id <- function(sub) {
+prepend_s_to_subject_id <- function(sub) {
     return(paste0('s',sub))
 }
