@@ -1,7 +1,7 @@
 Package: halle
 Title: Halle R. Zucker R functions
-Version: 0.1.0
 Authors@R: person("Halle", "Zucker", email = "hrzucker@ucdavis.edu", role = c("aut","cre"))
+Version: 0.2.0
 Description: Common R functions that Halle uses.
 Depends: 
     R (>= 3.2.0)
