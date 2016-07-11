@@ -38,6 +38,8 @@
 #' standard: -0.468829054
 #' Morris DeShon: -0.470087261
 #' Dunlap: -0.413884462
+#'
+#' @export
 
 compute_cohens_d <- function(input_df) {
 
