@@ -43,6 +43,10 @@
 
 compute_cohens_d <- function(input_df) {
 
+  # have option to turn on/off printing out intermediate steps
+  # eventually, this will be an option in the function #126253201
+  verbose <- 0
+
   # clear out all the variables we're going to use in the function just to be safe
   diff_df <- NULL
   mean_diff_df <- NULL
@@ -58,33 +62,45 @@ compute_cohens_d <- function(input_df) {
   # compute the variables needed for each effect size measure
   input_df %>%
     dplyr::mutate(diff = var1 - var2) -> diff_df
-  print(cat("Difference between the conditions, by subject (first 6 subjects): "))
-  print(head(diff_df))
+  if(verbose == 1){
+    print(cat("Difference between the conditions, by subject (first 6 subjects): "))
+    print(head(diff_df))
+  }
 
   diff_df %>%
     dplyr::summarise(mean_diff = mean(diff, na.rm = TRUE)) -> mean_diff_df
-  print(cat("Difference between the condition means: "))
-  print(mean_diff_df)
+  if(verbose == 1){
+    print(cat("Difference between the condition means: "))
+    print(mean_diff_df)
+  }
 
   input_df %>%
     dplyr::summarise_each(funs(sd)) -> sd_df
-  print(cat("Standard deviations of each condition: "))
-  print(sd_df)
+  if(verbose == 1){
+    print(cat("Standard deviations of each condition: "))
+    print(sd_df)
+  }
 
   diff_df %>%
     dplyr::summarise(sd_diff = sd(diff, na.rm = TRUE)) -> sd_diff_df
-  print(cat("Standard deviation of the difference between conditions: "))
-  print(sd_diff_df)
+  if(verbose == 1){
+    print(cat("Standard deviation of the difference between conditions: "))
+    print(sd_diff_df)
+  }
 
   sd_df %>%
     dplyr::summarise(mean_sd = mean(c(var1, var2))) -> mean_sd_df
-  print(cat("Mean of the standard deviations for each condition: "))
-  print(mean_sd_df)
+  if(verbose == 1){
+    print(cat("Mean of the standard deviations for each condition: "))
+    print(mean_sd_df)
+  }
 
   input_df %>%
     dplyr::summarise(corr = cor(var1, var2)) -> corr_df
-  print(cat("Correlation between the conditions: "))
-  print(corr_df)
+  if(verbose == 1){
+    print(cat("Correlation between the conditions: "))
+    print(corr_df)
+  }
 
   with(input_df, t.test(var1, var2, paired = TRUE)) ->  tt
   print(cat("Paired t-test value: "))
