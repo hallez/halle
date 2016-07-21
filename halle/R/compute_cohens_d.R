@@ -67,9 +67,9 @@ compute_cohens_d <- function(input_df) {
   mean_sd_df <- NULL
   corr_df <- NULL
   tt <- NULL
-  ef_no_correction <- NULL
-  ef_morris_deshon <- NULL
-  ef_dunlap <- NULL
+  cohens_d_standard <- NULL
+  cohens_d_morris_deshon <- NULL
+  cohens_d_dunlap <- NULL
 
   # compute the variables needed for each effect size measure
   input_df %>%
@@ -118,14 +118,21 @@ compute_cohens_d <- function(input_df) {
   print(cat("Paired t-test value: "))
   print(tt$statistic)
 
-  ef_no_correction <- mean_diff_df / sd_diff_df
+  cohens_d_standard <- mean_diff_df / sd_diff_df
 
-  ef_morris_deshon <- mean_diff_df / (mean_sd_df * (sqrt(2*(1-corr_df))))
+  cohens_d_morris_deshon <- mean_diff_df / (mean_sd_df * (sqrt(2*(1-corr_df))))
 
-  ef_dunlap <- tt$statistic * (((2 *(1 - corr_df)) / (dim(input_df)[1])) ^ 0.5)
+  cohens_d_dunlap <- tt$statistic * (((2 *(1 - corr_df)) / (dim(input_df)[1])) ^ 0.5)
 
-  print(cat("Effect size, standard: "))
-  print(ef_no_correction)
+  print(cat("Cohen's d effect size ('standard') is: "))
+  print(cohens_d_standard)
+
+  print(cat("Cohen's d effect size ('Morris Deshon') is: "))
+  print(cohens_d_morris_deshon)
+
+  print(cat("Cohen's d effect size ('Dunlap') is: "))
+  print(cohens_d_dunlap)
+}
 
 compute_cohens_d_vs_0 <- function(input_df){
   # clear out all the variables we're going to use in the function just to be safe
