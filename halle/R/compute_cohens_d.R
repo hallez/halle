@@ -32,7 +32,7 @@
 #' halle::compute_cohens_d(renamed_dataframe)
 #' ---
 #' To verify this function works with a set of test data, try one of the following.
-#' Test data courtesy of Tanya Jonker (tanyarjonker@gmail.com) and results based on calculations from her Excel workbook.
+#' Test data courtesy of Tanya Jonker (tanyarjonker <at> gmail.com) and results based on calculations from her Excel workbook.
 #' Example 1 test data
 #' e1_condA <- c(0.50,0.88,0.56,0.69,1.00,0.56,0.69,0.56,0.81,0.69,0.69,0.63,0.56,0.69,0.81,0.81,0.63,0.75,0.88,0.69,0.75,0.69,0.69,0.69,0.56,0.81,0.56,0.69,0.75,0.63)
 #' e1_condB <- c(0.75,1.00,0.75,0.75,0.94,0.69,0.44,0.69,0.81,0.56,0.75,0.69,0.56,0.88,0.94,0.50,0.69,0.75,1.00,0.69,0.94,0.50,0.63,0.75,0.31,0.81,0.94,0.81,0.81,0.75)

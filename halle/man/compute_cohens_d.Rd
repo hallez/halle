@@ -26,9 +26,21 @@ Dunlap: Computes effect size while correcting for the correlation between condit
 Generally takes the form of `t_statistic * (((2 *(1 - correlation)) / (number_of_subjects) ^ 0.5)`
 This can be found in their paper under Equation 3.
 Dunlap, W. P., Cortina, J. M., Vaslow, J. B., & Burke, M. J. (1996). Meta-analysis of experiments with matched groups or repeated measures designs. Psychological Methods, 1(2), 170–177. http://doi.org/10.1037/1082-989X.1.2.170
-
-If you'd like to verify this function works with a set of test data, try one of the following.
-Test data courtesy of Tanya Jonker (tanyarjonker@gmail.com) and results based on calculations from her Excel workbook.
+---
+To compute Cohen's d for a single group t-test against 0:
+compute_cohens_d_vs_0(data_frame_with_var1_column)
+This will return the "standard" Cohen's d (described above).
+---
+To change the names of dataframe columns, here's one option:
+original_dataframe %>%
+  dplyr::select(long_var_name1, long_var_name2) %>%
+  dplyr::rename(var1 = long_var_name1,
+                var2 = long_var_name2) ->
+  renamed_dataframe
+halle::compute_cohens_d(renamed_dataframe)
+---
+To verify this function works with a set of test data, try one of the following.
+Test data courtesy of Tanya Jonker (tanyarjonker <at> gmail.com) and results based on calculations from her Excel workbook.
 Example 1 test data
 e1_condA <- c(0.50,0.88,0.56,0.69,1.00,0.56,0.69,0.56,0.81,0.69,0.69,0.63,0.56,0.69,0.81,0.81,0.63,0.75,0.88,0.69,0.75,0.69,0.69,0.69,0.56,0.81,0.56,0.69,0.75,0.63)
 e1_condB <- c(0.75,1.00,0.75,0.75,0.94,0.69,0.44,0.69,0.81,0.56,0.75,0.69,0.56,0.88,0.94,0.50,0.69,0.75,1.00,0.69,0.94,0.50,0.63,0.75,0.31,0.81,0.94,0.81,0.81,0.75)
