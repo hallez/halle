@@ -2,6 +2,7 @@
 
 export(calculate_summary_dplyr)
 export(compute_cohens_d)
+export(compute_cohens_d_vs_0)
 export(ensure_trailing_slash)
 export(fisher_r_to_z)
 export(fml)

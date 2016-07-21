@@ -134,6 +134,7 @@ compute_cohens_d <- function(input_df) {
   print(cohens_d_dunlap)
 }
 
+#' @export
 compute_cohens_d_vs_0 <- function(input_df){
   # clear out all the variables we're going to use in the function just to be safe
   cohens_d <- NULL
