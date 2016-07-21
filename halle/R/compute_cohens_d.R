@@ -138,6 +138,11 @@ compute_cohens_d <- function(input_df) {
 compute_cohens_d_vs_0 <- function(input_df){
   # clear out all the variables we're going to use in the function just to be safe
   cohens_d <- NULL
+  tt <- NULL
+
+  with(input_df, t.test(var1, mu = 0, na.rm = TRUE)) ->  tt
+  print(cat("T-test vs. 0 value: "))
+  print(tt$statistic)
 
   input_df %>%
     dplyr::summarise_each(funs(mean(., na.rm = TRUE), sd)) %>%
