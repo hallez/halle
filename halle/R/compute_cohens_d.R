@@ -162,6 +162,10 @@ compute_cohens_d_vs_0 <- function(input_df){
 
 #' @export
 compute_cohens_d_independent_samples <- function(input_df){
+  # have option to turn on/off printing out intermediate steps
+  # eventually, this will be an option in the function #126253201
+  verbose <- 0
+
   # clear out the variables we're going to use in the function
   summarized_df <- NULL
   pooled_sd <- NULL
@@ -170,16 +174,31 @@ compute_cohens_d_independent_samples <- function(input_df){
   diff_means <- NULL
   cohens_d <- NULL
 
+  # compute t-test
+  # based on DV ~ IV a la http://my.ilstu.edu/~wjschne/444/IndependentSamples.html#(5)
+  with(input_df, t.test(var1 ~ group)) ->  tt
+  print(cat("Independent samples t-test value: "))
+  print(tt$statistic)
+
   # compute mean, sd, and length of each group
   input_df %>%
+    dplyr::select(group, var1) %>%
     dplyr::group_by(group) %>%
     dplyr::summarise_each(funs(mean, sd, length)) %>%
     data.frame() -> summarized_df
+  if(verbose == 1){
+    print(cat("Summarized means, sd, length for each group"))
+    print(summarized_df)
+  }
 
   # computed pooled SD
   # based on: http://stackoverflow.com/questions/16974389/how-to-calculate-a-pooled-standard-deviation-in-r
   # sqrt( sum(df$sd^2 * (df$n - 1)) / (sum(df$n - 1)) )
   pooled_sd <- sqrt(sum(summarized_df$sd^2 * (summarized_df$length - 1)) / (sum(summarized_df$length - 1)))
+  if(verbose == 1){
+    print(cat("Pooled SD:"))
+    print(pooled_sd)
+  }
 
   # subtract means
   # based on: http://stackoverflow.com/questions/22589851/build-difference-between-groups-with-dplyr-in-r
@@ -193,6 +212,10 @@ compute_cohens_d_independent_samples <- function(input_df){
   g1_mean <- summarized_df %>% dplyr::filter(group == group[1]) %>% select(mean)
   g2_mean <- summarized_df %>% dplyr::filter(group == group[2]) %>% select(mean)
   diff_means <- g1_mean - g2_mean
+  if(verbose == 1){
+    print(cat("Difference between group means is: "))
+    print(diff_means)
+  }
 
   # compute cohen's d
   cohens_d <- diff_means / pooled_sd
