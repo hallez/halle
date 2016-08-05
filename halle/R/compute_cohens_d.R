@@ -23,6 +23,10 @@
 #' compute_cohens_d_vs_0(data_frame_with_var1_column)
 #' This will return the "standard" Cohen's d (described above).
 #' ---
+#' To compute Cohen's d for two different (ie, independent) samples:
+#' compute_cohens_d_independent_samples(input_df)
+#' Here, the input_df should have a column of data (`var1`) and a grouping variable (`group`)
+#' ---
 #' To change the names of dataframe columns, here's one option:
 #' original_dataframe %>%
 #'   dplyr::select(long_var_name1, long_var_name2) %>%
@@ -51,6 +55,10 @@
 #' Morris DeShon: -0.470087261
 #' Dunlap: -0.413884462
 #'
+#' To create test data for independent samples t-test:
+#' indepen_df <- data.frame(var1 = c(e1_condA, e1_condB, e2_condA, e2_condB), group = sample(LETTERS[1:2], 120, replace = TRUE))
+#' # check that groups are of unequal size. otherwise, re-run to generate new random groups
+#' table(indepen_df$group)
 #' @export
 
 compute_cohens_d <- function(input_df) {
@@ -150,4 +158,29 @@ compute_cohens_d_vs_0 <- function(input_df){
 
   print(cat("Cohen's d ('standard') for condition is: "))
   print(cohens_d)
+}
+
+#' @export
+compute_cohens_d_independent_samples <- function(input_df){
+  # clear out the variables we're going to use in the function
+  summarized_df <- NULL
+
+  # compute mean, sd, and length of each group
+  indepen_df %>%
+    dplyr::group_by(group) %>%
+    dplyr::summarise_each(funs(mean, sd, length)) -> summarized_df
+
+  # computed pooled SD
+  # based on: http://stackoverflow.com/questions/16974389/how-to-calculate-a-pooled-standard-deviation-in-r
+  # sqrt( sum(df$sd^2 * (df$n - 1)) / (sum(df$n - 1)) )
+  pooled_sd <- sqrt(sum(summarized_df$sd^2 * (summarized_df$length - 1)) / (sum(summarized_df$length - 1)))
+
+  # subtract means
+  # based on: http://stackoverflow.com/questions/22589851/build-difference-between-groups-with-dplyr-in-r
+  # http://stackoverflow.com/questions/28225473/how-to-subtract-rows-where-column-factor-matches-using-dplyr
+  summarized_df %>%
+    dplyr::ungroup() %>%
+    dplyr::group_by(group) %>%
+    dplyr::summarise(d = mean[1] - mean[2])
+
 }
