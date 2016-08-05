@@ -31,6 +31,10 @@ To compute Cohen's d for a single group t-test against 0:
 compute_cohens_d_vs_0(data_frame_with_var1_column)
 This will return the "standard" Cohen's d (described above).
 ---
+To compute Cohen's d for two different (ie, independent) samples:
+compute_cohens_d_independent_samples(input_df)
+Here, the input_df should have a column of data (`var1`) and a grouping variable (`group`)
+---
 To change the names of dataframe columns, here's one option:
 original_dataframe %>%
   dplyr::select(long_var_name1, long_var_name2) %>%
@@ -58,5 +62,10 @@ TJ would estimate the effect size as
 standard: -0.468829054
 Morris DeShon: -0.470087261
 Dunlap: -0.413884462
+
+To create test data for independent samples t-test:
+indepen_df <- data.frame(var1 = c(e1_condA, e1_condB, e2_condA, e2_condB), group = sample(LETTERS[1:2], 120, replace = TRUE))
+# check that groups are of unequal size. otherwise, re-run to generate new random groups
+table(indepen_df$group)
 }
 
