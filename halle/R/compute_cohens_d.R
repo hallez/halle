@@ -144,6 +144,10 @@ compute_cohens_d <- function(input_df) {
 
 #' @export
 compute_cohens_d_vs_0 <- function(input_df){
+  # have option to turn on/off printing out intermediate steps
+  # eventually, this will be an option in the function #126253201
+  verbose <- 0
+
   # clear out all the variables we're going to use in the function just to be safe
   cohens_d <- NULL
   tt <- NULL
