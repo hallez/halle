@@ -164,11 +164,17 @@ compute_cohens_d_vs_0 <- function(input_df){
 compute_cohens_d_independent_samples <- function(input_df){
   # clear out the variables we're going to use in the function
   summarized_df <- NULL
+  pooled_sd <- NULL
+  g1_mean <- NULL
+  g2_mean <- NULL
+  diff_means <- NULL
+  cohens_d <- NULL
 
   # compute mean, sd, and length of each group
-  indepen_df %>%
+  input_df %>%
     dplyr::group_by(group) %>%
-    dplyr::summarise_each(funs(mean, sd, length)) -> summarized_df
+    dplyr::summarise_each(funs(mean, sd, length)) %>%
+    data.frame() -> summarized_df
 
   # computed pooled SD
   # based on: http://stackoverflow.com/questions/16974389/how-to-calculate-a-pooled-standard-deviation-in-r
@@ -177,10 +183,20 @@ compute_cohens_d_independent_samples <- function(input_df){
 
   # subtract means
   # based on: http://stackoverflow.com/questions/22589851/build-difference-between-groups-with-dplyr-in-r
-  # http://stackoverflow.com/questions/28225473/how-to-subtract-rows-where-column-factor-matches-using-dplyr
-  summarized_df %>%
-    dplyr::ungroup() %>%
-    dplyr::group_by(group) %>%
-    dplyr::summarise(d = mean[1] - mean[2])
+  # using transmute: http://stackoverflow.com/questions/28225473/how-to-subtract-rows-where-column-factor-matches-using-dplyr
+  # TODO: figure out why this doesn't work #127775101
+  # summarized_df %>%
+  #  dplyr::ungroup() %>%
+  #  dplyr::group_by(group) %>%
+  #  dplyr::summarise(d = mean[1] - mean[2])
+  # meanwhile, this hackier way should work
+  g1_mean <- summarized_df %>% dplyr::filter(group == group[1]) %>% select(mean)
+  g2_mean <- summarized_df %>% dplyr::filter(group == group[2]) %>% select(mean)
+  diff_means <- g1_mean - g2_mean
+
+  # compute cohen's d
+  cohens_d <- diff_means / pooled_sd
+  print(cat("Cohen's d (diff_mean / pooled_sd) is: "))
+  print(cohens_d)
 
 }
