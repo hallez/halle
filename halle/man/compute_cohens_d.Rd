@@ -26,15 +26,21 @@ Dunlap: Computes effect size while correcting for the correlation between condit
 Generally takes the form of `t_statistic * (((2 *(1 - correlation)) / (number_of_subjects) ^ 0.5)`
 This can be found in their paper under Equation 3.
 Dunlap, W. P., Cortina, J. M., Vaslow, J. B., & Burke, M. J. (1996). Meta-analysis of experiments with matched groups or repeated measures designs. Psychological Methods, 1(2), 170–177. http://doi.org/10.1037/1082-989X.1.2.170
+
 ---
+
 To compute Cohen's d for a single group t-test against 0:
 compute_cohens_d_vs_0(data_frame_with_var1_column)
 This will return the "standard" Cohen's d (described above).
+
 ---
+
 To compute Cohen's d for two different (ie, independent) samples:
 compute_cohens_d_independent_samples(input_df)
 Here, the input_df should have a column of data (`var1`) and a grouping variable (`group`)
+
 ---
+
 To change the names of dataframe columns, here's one option:
 original_dataframe %>%
   dplyr::select(long_var_name1, long_var_name2) %>%
@@ -42,7 +48,9 @@ original_dataframe %>%
                 var2 = long_var_name2) ->
   renamed_dataframe
 halle::compute_cohens_d(renamed_dataframe)
+
 ---
+
 To verify this function works with a set of test data, try one of the following.
 Test data courtesy of Tanya Jonker (tanyarjonker <at> gmail.com) and results based on calculations from her Excel workbook.
 Example 1 test data
@@ -68,4 +76,3 @@ indepen_df <- data.frame(var1 = c(e1_condA, e1_condB, e2_condA, e2_condB), group
 # check that groups are of unequal size. otherwise, re-run to generate new random groups
 table(indepen_df$group)
 }
-

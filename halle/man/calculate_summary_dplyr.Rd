@@ -13,4 +13,3 @@ calculate_summary_dplyr(input_dataframe)
 This function calculates mean, SD, SEM, and limits (mean +/- SEM) on a variable (value) within a dataframe (input_dataframe).
 Returns global variable `summarized_data`
 }
-

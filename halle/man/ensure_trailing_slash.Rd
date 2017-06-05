@@ -15,4 +15,3 @@ path Input string with a trailing slash (if had at slash at time of input, will 
 \description{
 Function to ensure path ends in a trailing slash
 }
-

@@ -12,4 +12,3 @@ replace_NA_with_zeros(x)
 \description{
 based on: http://stackoverflow.com/questions/26081672/change-variable-values-by-groups-using-dplyr
 }
-

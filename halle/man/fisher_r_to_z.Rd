@@ -14,4 +14,3 @@ fisher_r_to_z(data)
 Fisher's r to z transform
 //TODO investigate using fisherz function instead
 }
-

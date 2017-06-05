@@ -15,4 +15,3 @@ formatted subject number
 \description{
 Format subject IDs by appending s to subjectID so that format is s#
 }
-
