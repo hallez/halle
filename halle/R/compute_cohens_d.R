@@ -24,15 +24,15 @@
 #' To compute Cohen's d for a single group t-test against 0:
 #' compute_cohens_d_vs_0(data_frame_with_var1_column)
 #' This will return the "standard" Cohen's d (described above).
-#' 
+#'
 #' ---
-#' 
+#'
 #' To compute Cohen's d for two different (ie, independent) samples:
 #' compute_cohens_d_independent_samples(input_df)
 #' Here, the input_df should have a column of data (`var1`) and a grouping variable (`group`)
-#' 
+#'
 #' ---
-#' 
+#'
 #' To change the names of dataframe columns, here's one option:
 #' original_dataframe %>%
 #'   dplyr::select(long_var_name1, long_var_name2) %>%
@@ -40,9 +40,9 @@
 #'                 var2 = long_var_name2) ->
 #'   renamed_dataframe
 #' halle::compute_cohens_d(renamed_dataframe)
-#' 
+#'
 #' ---
-#' 
+#'
 #' To verify this function works with a set of test data, try one of the following.
 #' Test data courtesy of Tanya Jonker (tanyarjonker <at> gmail.com) and results based on calculations from her Excel workbook.
 #' Example 1 test data
@@ -103,7 +103,7 @@ compute_cohens_d <- function(input_df) {
   }
 
   input_df %>%
-    dplyr::summarise_each(funs(sd)) -> sd_df
+    dplyr::summarise_all(funs(sd)) -> sd_df
   if(verbose == 1){
     print(cat("Standard deviations of each condition: "))
     print(sd_df)
@@ -165,7 +165,7 @@ compute_cohens_d_vs_0 <- function(input_df){
   print(tt$statistic)
 
   input_df %>%
-    dplyr::summarise_each(funs(mean(., na.rm = TRUE), sd)) %>%
+    dplyr::summarise_all(funs(mean(., na.rm = TRUE), sd)) %>%
     dplyr::summarise(cohens_d = mean/sd) -> cohens_d
 
   print(cat("Cohen's d ('standard') for condition is: "))
@@ -196,7 +196,7 @@ compute_cohens_d_independent_samples <- function(input_df){
   input_df %>%
     dplyr::select(group, var1) %>%
     dplyr::group_by(group) %>%
-    dplyr::summarise_each(funs(mean, sd, length)) %>%
+    dplyr::summarise_all(funs(mean, sd, length)) %>%
     data.frame() -> summarized_df
   if(verbose == 1){
     print(cat("Summarized means, sd, length for each group"))
