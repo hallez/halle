@@ -165,7 +165,7 @@ compute_cohens_d_vs_0 <- function(input_df){
   print(tt$statistic)
 
   input_df %>%
-    dplyr::summarise_all(funs(mean(., na.rm = TRUE), sd)) %>%
+    dplyr::summarise_all(funs(mean(., na.rm = TRUE), sd(., na.rm=TRUE))) %>%
     dplyr::summarise(cohens_d = mean/sd) -> cohens_d
 
   print(cat("Cohen's d ('standard') for condition is: "))
